@@ -1,4 +1,4 @@
-# Calculate_marker_statisics_for_KRONOS
+# Calculate_marker_stats_for_KRONOS
 
 Nextflow pipeline for computing per-marker mean and standard deviation from COMET OME-TIFF images for KRONOS marker metadata.
 
