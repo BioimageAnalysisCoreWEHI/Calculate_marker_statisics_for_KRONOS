@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/BioimageAnalysisCoreWEHI/Calculate_marker_statisics_for_KRONOS/main/nextflow_schema.json",
+  "title": "calculate_marker_statistics_for_kronos pipeline parameters",
+  "description": "Compute KRONOS marker mean/std from COMET OME-TIFF files",
+  "type": "object",
+  "$defs": {
+    "input_output_options": {
+      "title": "Input/output options",
+      "type": "object",
+      "required": ["image_dir", "outdir"],
+      "properties": {
+        "image_dir": {
+          "type": "string",
+          "format": "directory-path",
+          "exists": true,
+          "description": "Directory containing OME-TIFF files (searched recursively)"
+        },
+        "output": {
+          "type": "string",
+          "default": "marker_stats.csv",
+          "description": "Output CSV file name"
+        },
+        "pattern": {
+          "type": "string",
+          "default": "*.ome.tiff",
+          "description": "Glob pattern used recursively under image_dir"
+        },
+        "dtype_max": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "Optional dtype max override for normalization (e.g. 65535 for uint16)"
+        },
+        "existing_metadata": {
+          "type": "string",
+          "format": "file-path",
+          "exists": true,
+          "description": "Optional existing marker_metadata.csv to compare against"
+        },
+        "script": {
+          "type": "string",
+          "format": "file-path",
+          "exists": true,
+          "default": "bin/compute_marker_stats.py",
+          "description": "Path to the Python compute script"
+        },
+        "outdir": {
+          "type": "string",
+          "format": "directory-path",
+          "description": "Output directory for published files"
+        },
+        "publish_dir_mode": {
+          "type": "string",
+          "default": "copy",
+          "description": "Method used by Nextflow publishDir",
+          "enum": ["symlink", "rellink", "link", "copy", "copyNoFollow", "move"]
+        }
+      }
+    },
+    "generic_options": {
+      "title": "Generic options",
+      "type": "object",
+      "properties": {
+        "validate_params": {
+          "type": "boolean",
+          "default": true,
+          "hidden": true,
+          "description": "Validate parameters against schema"
+        }
+      }
+    }
+  },
+  "allOf": [
+    { "$ref": "#/$defs/input_output_options" },
+    { "$ref": "#/$defs/generic_options" }
+  ]
+}
